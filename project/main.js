@@ -73,7 +73,7 @@ let anims = {
         idle: function (t, dt) {
             charInfo.char1.animTime += dt;
             push();
-            translate(charInfo.char1.posX,charInfo.char1.posY,charInfo.char1.posZ);
+            translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
             scaleVar = 1 + Math.sin(charInfo.char1.animTime) / 200;
@@ -88,17 +88,17 @@ let anims = {
         attack: function (t, dt) {
             charInfo.char1.animTime += dt;
             push();
-            translate(charInfo.char1.posX,charInfo.char1.posY,charInfo.char1.posZ);
+            translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
             if (charInfo.char1.animTime < 1) {
-                drawChar1(45,-40,45,-40);
+                drawChar1(45, -40, 45, -40);
                 translate(0, -50, 40);
                 rotateX(-60 + charInfo.char1.animTime * 50);
                 drawSword();
             } if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
                 translate(0, 0, (charInfo.char1.animTime - 1) * 100);
-                drawChar1(45,-40,45,-40);
+                drawChar1(45, -40, 45, -40);
                 translate(0, -50, 40);
                 rotateX(-10 - (charInfo.char1.animTime - 1) * 150);
                 drawSword();
@@ -120,22 +120,27 @@ let anims = {
         defend: function (t, dt) {
             charInfo.char1.animTime += dt;
             push();
-            translate(charInfo.char1.posX,charInfo.char1.posY,charInfo.char1.posZ);
+            translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
-            translate(charInfo.char1.animTime, 0, 0);
+            //here
             pop();
-        }
+        },
+        //special0: function(t, dt) {
+        //
+        //},
     },
     char2: {
         idle: function (t, dt) {
             charInfo.char2.animTime += dt;
             push();
-            translate(charInfo.char2.posX,charInfo.char2.posY,charInfo.char2.posZ);
+            translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
             healthBar("char2");
             rotateY(charInfo.char2.rotY);
+            scaleVar = 1 + Math.sin(charInfo.char2.animTime) / 200;
+            scale(scaleVar, scaleVar, scaleVar);
             drawChar2();
-            translate(30,-40,30);
+            translate(30, -40, 30);
             rotateY(180);
             rotateX(-110);
             drawSword2();
@@ -144,39 +149,82 @@ let anims = {
         attack: function (t, dt) {
             charInfo.char2.animTime += dt;
             push();
-            translate(charInfo.char2.posX,charInfo.char2.posY,charInfo.char2.posZ);
+            translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
             healthBar("char2");
             rotateY(charInfo.char2.rotY);
+
+            if (charInfo.char2.animTime <= 1) {
+                translate(0,0,charInfo.char2.animTime * 75);
+                drawChar2();
+                translate(-30, -100, 50);
+                rotateZ(140);
+                rotateX((charInfo.char2.animTime) * -90);
+            }
+            if (charInfo.char2.animTime > 1 && charInfo.char2.animTime <= 1.2) {
+                translate(0,0,75);
+                drawChar2();
+                translate(-30, -100, 50);
+                rotateZ(140);
+                rotateX(-90);
+            }
+            if (charInfo.char2.animTime > 1.2 && charInfo.char2.animTime <= 2.2) {
+                translate(0,0,(charInfo.char2.animTime - 0.2)*75);
+                drawChar2();
+                translate(-30, -100, 50);
+                rotateZ(140);
+                translate(0, -(charInfo.char2.animTime - 1.2) * 50, 0)
+                rotateX(-90);
+                rotateY(180);
+                rotateX((charInfo.char2.animTime - 1.2) * -90);
+            }
+            if (charInfo.char2.animTime > 2.2) {
+                translate(0,0,150);
+                drawChar2();
+                translate(-30, -100, 50);
+                rotateZ(140);
+                translate(0, -50, 0);
+                rotateY(180);
+            }
+            drawSword2();
             pop();
         },
         defend: function (t, dt) {
             charInfo.char2.animTime += dt;
             push();
-            translate(charInfo.char2.posX,charInfo.char2.posY,charInfo.char2.posZ);
+            translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
             healthBar("char2");
             rotateY(charInfo.char2.rotY);
-            if (charInfo.char2.animTime > 1 && charInfo.char2.animTime < 1.75){
-                translate(0,0,-(charInfo.char2.animTime-1) * 150)
+            if (charInfo.char2.animTime > 1 && charInfo.char2.animTime < 1.75) {
+                translate(0, 0, -(charInfo.char2.animTime - 1) * 150)
             }
-            if (charInfo.char2.animTime >= 1.75)[
-                translate(0,0,-112.5 + ((charInfo.char2.animTime - 1.75)*75))
+            if (charInfo.char2.animTime >= 1.75) [
+                translate(0, 0, -112.5 + ((charInfo.char2.animTime - 1.75) * 75))
             ]
-            drawChar2(110,-15,0,0);
-            translate(-30,-100,50);
+            drawChar2(110, -15, 0, 0);
+            translate(-30, -100, 50);
             rotateZ(140);
             drawSword2();
 
             pop();
         },
+        //ko: function (t, dt) {
+        //
+        //},
     },
     // char3: {
-    //     idle,
-    //     attack,
-    //     defend,
+    //     idle: function (t, dt) {
+
+    //     },
+    //     attack: function (t, dt) {
+
+    //     },
+    //     defend: function (t, dt) {
+
+    //     },
     // },
 }
 
-let currentScene = "sceneTwo";
+let currentScene = "startMenu";
 
 let sceneTime = 0;
 
@@ -196,36 +244,43 @@ let scenes = {
     },
     sceneTwo: function (t, dt) {
         sceneTime += dt
+        if (sceneTime >= 3.25) {
+            sceneTime = 0
+            resetAnims();
+            currentScene = "sceneThree"
+        }
         charInfo.char1.currentAnim = anims.char1.attack;
         charInfo.char2.currentAnim = anims.char2.defend;
         charInfo.char1.posX = -90;
         charInfo.char1.rotY = 90;
         charInfo.char2.posX = 90;
-        charInfo.char2.rotY = -90; 
-        if (sceneTime >= 3.25){
-            sceneTime = 0
-            resetAnims();
-            currentScene = "sceneThree"
+        charInfo.char2.rotY = -90;
+        if (sceneTime >= 1.5) {
+            charInfo.char2.stats.hp = 98
         }
     },
     sceneThree: function (t, dt) {
         sceneTime += dt
-        charInfo.char2.visible = false
-        charInfo.char1.currentAnim = anims.char1.idle;
+        charInfo.char1.currentAnim = anims.char1.defend;
+        charInfo.char2.currentAnim = anims.char2.attack;
+        charInfo.char1.posX = -90;
+        charInfo.char1.rotY = 90;
+        charInfo.char2.posX = 90;
+        charInfo.char2.rotY = -90;
     }
 }
 
-function drawChar1(armRX,armRZ,armLX,armLZ) {
-    if (armRX == undefined){
+function drawChar1(armRX, armRZ, armLX, armLZ) {
+    if (armRX == undefined) {
         armRX = 0
     }
-    if (armLX == undefined){
+    if (armLX == undefined) {
         armLX = 0
     }
-    if (armRZ == undefined){
+    if (armRZ == undefined) {
         armRZ = 0
     }
-    if (armLZ == undefined){
+    if (armLZ == undefined) {
         armLZ = 0
     }
     push();
@@ -242,7 +297,7 @@ function drawChar1(armRX,armRZ,armLX,armLZ) {
     translate(30, -35, 0);
     rotateX(armLX);
     rotateZ(-15 - armLZ);
-    translate(0,25,0);
+    translate(0, 25, 0);
     fill(115, 227, 250);
     cylinder(6, 50)
     pop();
@@ -250,7 +305,7 @@ function drawChar1(armRX,armRZ,armLX,armLZ) {
     translate(-30, -35, 0);
     rotateX(armRX);
     rotateZ(15 + armRZ);
-    translate(0,25,0);
+    translate(0, 25, 0);
     fill(115, 227, 250);
     cylinder(6, 50);
     pop();
@@ -264,17 +319,17 @@ function drawChar1(armRX,armRZ,armLX,armLZ) {
     pop();
 }
 
-function drawChar2(armRX,armRZ,armLX,armLZ) {
-    if (armRX == undefined){
+function drawChar2(armRX, armRZ, armLX, armLZ) {
+    if (armRX == undefined) {
         armRX = 0
     }
-    if (armLX == undefined){
+    if (armLX == undefined) {
         armLX = 0
     }
-    if (armRZ == undefined){
+    if (armRZ == undefined) {
         armRZ = 0
     }
-    if (armLZ == undefined){
+    if (armLZ == undefined) {
         armLZ = 0
     }
     push();
@@ -291,7 +346,7 @@ function drawChar2(armRX,armRZ,armLX,armLZ) {
     translate(30, -35, 0);
     rotateX(armLX);
     rotateZ(-15 - armLZ);
-    translate(0,25,0);
+    translate(0, 25, 0);
     fill(115, 0, 0);
     cylinder(6, 50)
     pop();
@@ -299,7 +354,7 @@ function drawChar2(armRX,armRZ,armLX,armLZ) {
     translate(-30, -35, 0);
     rotateX(armRX);
     rotateZ(15 + armRZ);
-    translate(0,25,0);
+    translate(0, 25, 0);
     fill(115, 0, 0);
     cylinder(6, 50);
     pop();
@@ -432,54 +487,54 @@ function drawSword() {
 function drawSword2() {
     push();
     strokeWeight(1)
-    translate(0,-12,0);
+    translate(0, -12, 0);
     beginShape();
     vertex(1.5, 0, 3);
-    vertex(1.5,-70,3);
-    vertex(1.5,-80,-5.5);
-    vertex(1.5,0,-5.5);
+    vertex(1.5, -70, 3);
+    vertex(1.5, -80, -5.5);
+    vertex(1.5, 0, -5.5);
     endShape();
     beginShape();
     vertex(-1.5, 0, 3);
-    vertex(-1.5,-70,3);
-    vertex(-1.5,-80,-5.5);
-    vertex(-1.5,0,-5.5);
+    vertex(-1.5, -70, 3);
+    vertex(-1.5, -80, -5.5);
+    vertex(-1.5, 0, -5.5);
     endShape();
     beginShape();
-    vertex(1.5,0,-5.5);
-    vertex(1.5,-80,-5.5);
-    vertex(0,-85.5,-5.5);
-    vertex(-1.5,-80,-5.5);
-    vertex(-1.5,0,-5.5);
+    vertex(1.5, 0, -5.5);
+    vertex(1.5, -80, -5.5);
+    vertex(0, -85.5, -5.5);
+    vertex(-1.5, -80, -5.5);
+    vertex(-1.5, 0, -5.5);
     endShape();
     beginShape();
-    vertex(1.5,0,3);
-    vertex(1.5,-70,3);
-    vertex(0,-72.5,5.5);
-    vertex(0,0,5.5);
+    vertex(1.5, 0, 3);
+    vertex(1.5, -70, 3);
+    vertex(0, -72.5, 5.5);
+    vertex(0, 0, 5.5);
     endShape();
     beginShape();
-    vertex(-1.5,0,3);
-    vertex(-1.5,-70,3);
-    vertex(0,-72.5,5.5);
-    vertex(0,0,5.5);
+    vertex(-1.5, 0, 3);
+    vertex(-1.5, -70, 3);
+    vertex(0, -72.5, 5.5);
+    vertex(0, 0, 5.5);
     endShape();
     beginShape();
-    vertex(1.5,-70,3);
-    vertex(1.5,-80,-5.5);
-    vertex(0,-85.5,-5.5);
-    vertex(0,-72.5,5.5);
+    vertex(1.5, -70, 3);
+    vertex(1.5, -80, -5.5);
+    vertex(0, -85.5, -5.5);
+    vertex(0, -72.5, 5.5);
     endShape();
     beginShape();
-    vertex(-1.5,-70,3);
-    vertex(-1.5,-80,-5.5);
-    vertex(0,-85.5,-5.5);
-    vertex(0,-72.5,5.5);
+    vertex(-1.5, -70, 3);
+    vertex(-1.5, -80, -5.5);
+    vertex(0, -85.5, -5.5);
+    vertex(0, -72.5, 5.5);
     endShape();
-    translate(0,2,0);
-    box(10,4,18);
-    translate(0,12,0);
-    box(3,20,5);
+    translate(0, 2, 0);
+    box(10, 4, 18);
+    translate(0, 12, 0);
+    box(3, 20, 5);
     pop();
 }
 
