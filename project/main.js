@@ -101,14 +101,14 @@ let anims = {
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
             if (charInfo.char1.animTime < 1) {
-                drawChar1(45, -40, 45, -40,(-15 + charInfo.char1.animTime * 50),0,0);
+                drawChar1(45, -40, 45, -40, (-15 + charInfo.char1.animTime * 50), 0, 0);
             } if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
                 translate(0, 0, (charInfo.char1.animTime - 1) * 100);
-                drawChar1(45, -40, 45, -40,(30 - (charInfo.char1.animTime - 1) * 150),0,0);
+                drawChar1(45, -40, 45, -40, (30 - (charInfo.char1.animTime - 1) * 150), 0, 0);
             }
             if (charInfo.char1.animTime > 1.75 && charInfo.char1.animTime < 3.25) {
                 translate(0, 0, 75 - (charInfo.char1.animTime - 1.75) * 50)
-                drawChar1(0,0,0,0,(-30 + (charInfo.char1.animTime - 1.75) * 20),0,0);
+                drawChar1(0, 0, 0, 0, (-30 + (charInfo.char1.animTime - 1.75) * 20), 0, 0);
             }
             if (charInfo.char1.animTime >= 3.25) {
                 drawChar1();
@@ -128,18 +128,9 @@ let anims = {
                 translate(0, 0, -165);
             }
             if (charInfo.char1.animTime < 0.5) {
-                drawChar1((charInfo.char1.animTime * 160), 0, 0, 0, charInfo.char1.animTime * 90, -10, -10, -10);
-                // translate(-35 + (charInfo.char1.animTime * -40), -40 + (charInfo.char1.animTime * -78), (charInfo.char1.animTime * 90));
-                // rotateZ(180 * charInfo.char1.animTime);
-                // rotateY(180 * charInfo.char1.animTime);
-                // drawSword();
-                rotate();
+                drawChar1((charInfo.char1.animTime * 160), 0, (charInfo.char1.animTime * 160), 0, 0, (charInfo.char1.animTime * 180), 0, (charInfo.char1.animTime * -180), 0, (charInfo.char1.animTime * 15));
             } else {
-                drawChar1(80)
-                translate(-40, -78, 45);
-                rotateZ(90);
-                rotateY(90);
-                drawSword();
+                drawChar1(80, 0, 80, 0, 0, 90, 0, -90, 0, 15)
             }
             pop();
         },
@@ -157,10 +148,6 @@ let anims = {
             scaleVar = 1 + Math.sin(charInfo.char2.animTime) / 200;
             scale(scaleVar, scaleVar, scaleVar);
             drawChar2();
-            translate(30, -40, 30);
-            rotateY(180);
-            rotateX(-110);
-            drawSword2();
             pop();
         },
         attack: function (t, dt) {
@@ -172,37 +159,21 @@ let anims = {
 
             if (charInfo.char2.animTime <= 1) {
                 translate(0, 0, charInfo.char2.animTime * 75);
-                drawChar2(110, -15, 0, 0);
-                translate(-30, -100, 50);
-                rotateZ(140);
-                rotateX((charInfo.char2.animTime) * -90);
+                drawChar2(110, -15, 0, 0, 0, 0, 140, (charInfo.char2.animTime * -90));
             }
-            if (charInfo.char2.animTime > 1 && charInfo.char2.animTime <= 1.2) {
+            if (charInfo.char2.animTime > 1 && charInfo.char2.animTime <= 1.5) {
                 translate(0, 0, 75);
-                drawChar2(110, -15, 0, 0);
-                translate(-30, -100, 50);
-                rotateZ(140);
-                rotateX(-90);
+                drawChar2(110, -15, 0, 0, 0, 180, 40, 90, 0, 0);
             }
-            if (charInfo.char2.animTime > 1.2 && charInfo.char2.animTime <= 2.2) {
-                translate(0, 0, (charInfo.char2.animTime - 0.2) * 75);
-                drawChar2(110 - (charInfo.char2.animTime - 1.2) * 40, -15 - (charInfo.char2.animTime - 1.2) * 25, 0, 0);
-                translate(-30, -100, 50);
-                rotateZ(140);
-                translate(0, -(charInfo.char2.animTime - 1.2) * 50, -10 * (charInfo.char2.animTime - 1.2))
-                rotateX(-90);
-                rotateY(180);
-                rotateX((charInfo.char2.animTime - 1.2) * -90);
+            if (charInfo.char2.animTime > 1.5 && charInfo.char2.animTime <= 2.5) {
+                translate(0, 0, (charInfo.char2.animTime - 0.5) * 75);
+                drawChar2(110 - (charInfo.char2.animTime - 1.5) * 70, -15 - (charInfo.char2.animTime - 1.5) * 15, 0, 0, -90);
             }
-            if (charInfo.char2.animTime > 2.2) {
+            if (charInfo.char2.animTime > 2.5) {
                 translate(0, 0, 150);
-                drawChar2(70, -40, 0, 0);
-                translate(-30, -100, 40);
-                rotateZ(140);
-                translate(0, -50, 0);
-                rotateY(180);
+                drawChar2(40, -30, 0, 0, -90);
             }
-            drawSword2();
+            //drawSword2();
             pop();
         },
         defend: function (t, dt) {
@@ -293,7 +264,7 @@ let scenes = {
     }
 }
 
-function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
+function drawChar1(armRX, armRZ, armLX, armLZ, wpnX, wpnY, wpnZ, wpnX2, wpnY2, wpnZ2) {
     if (armRX == undefined) {
         armRX = 0
     }
@@ -306,9 +277,6 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     if (armLZ == undefined) {
         armLZ = 0
     }
-    if (wpnD == undefined) {
-        wpnD = 0
-    }
     if (wpnX == undefined) {
         wpnX = 0
     }
@@ -317,6 +285,15 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     }
     if (wpnZ == undefined) {
         wpnZ = 0
+    }
+    if (wpnX2 == undefined) {
+        wpnX2 = 0
+    }
+    if (wpnY2 == undefined) {
+        wpnY2 = 0
+    }
+    if (wpnZ2 == undefined) {
+        wpnZ2 = 0
     }
     push();
     strokeWeight(0);
@@ -345,9 +322,14 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     fill(115, 227, 250);
     cylinder(6, 50);
     pop();
-    if (charInfo.char1.wpnState == "held"){
-        translate(0,25,0);
-        rotate(wpnD, [wpnX,wpnY, wpnZ]);
+    if (charInfo.char1.wpnState == "held") {
+        translate(0, 25, 0);
+        rotateX(-90 + wpnX);
+        rotateY(wpnY);
+        rotateZ(wpnZ);
+        rotateX(wpnX2);
+        rotateY(wpnY2);
+        rotateZ(wpnZ2);
         wpnInfo[charInfo.char1.currentWpn].draw();
     }
     pop();
@@ -360,7 +342,7 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     pop();
     pop();
     push();
-    if (charInfo.char1.wpnState == "sheathed"){
+    if (charInfo.char1.wpnState == "sheathed") {
         translate(-15, -100, -30);
         rotateY(90);
         rotateX(210);
@@ -369,7 +351,7 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     pop();
 }
 
-function drawChar2(armRX, armRZ, armLX, armLZ) {
+function drawChar2(armRX, armRZ, armLX, armLZ, wpnX, wpnY, wpnZ, wpnX2, wpnY2, wpnZ2) {
     if (armRX == undefined) {
         armRX = 0
     }
@@ -381,6 +363,24 @@ function drawChar2(armRX, armRZ, armLX, armLZ) {
     }
     if (armLZ == undefined) {
         armLZ = 0
+    }
+    if (wpnX == undefined) {
+        wpnX = 0
+    }
+    if (wpnY == undefined) {
+        wpnY = 0
+    }
+    if (wpnZ == undefined) {
+        wpnZ = 0
+    }
+    if (wpnX2 == undefined) {
+        wpnX2 = 0
+    }
+    if (wpnY2 == undefined) {
+        wpnY2 = 0
+    }
+    if (wpnZ2 == undefined) {
+        wpnZ2 = 0
     }
     push();
     strokeWeight(0);
@@ -405,8 +405,20 @@ function drawChar2(armRX, armRZ, armLX, armLZ) {
     rotateX(armRX);
     rotateZ(15 + armRZ);
     translate(0, 25, 0);
+    push();
     fill(115, 0, 0);
     cylinder(6, 50);
+    pop();
+    if (charInfo.char2.wpnState == "held") {
+        translate(0, 25, 0);
+        rotateX(-90 + wpnX);
+        rotateY(wpnY);
+        rotateZ(wpnZ);
+        rotateX(wpnX2);
+        rotateY(wpnY2);
+        rotateZ(wpnZ2);
+        wpnInfo[charInfo.char2.currentWpn].draw();
+    }
     pop();
     push();
     fill(115, 0, 0);
@@ -422,6 +434,14 @@ function drawChar2(armRX, armRZ, armLX, armLZ) {
     strokeWeight(1);
     cone(50, 20);
     pop();
+    pop();
+    push();
+    if (charInfo.char2.wpnState == "sheathed") {
+        translate(30, -40, 30);
+        rotateY(180);
+        rotateX(-110);
+        wpnInfo[charInfo.char2.currentWpn].draw();
+    }
     pop();
 }
 
