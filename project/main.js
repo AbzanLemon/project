@@ -10,7 +10,21 @@ export function preload() {
 //Called once when program loads
 export function setup() {
     camera(0, -200, 700);
+
+    document.getElementById("start").addEventListener('click', startButtonClicked);
+    //document.getElementById("kill").addEventListener('click', killButtonClicked);
 }
+
+let start = false;
+
+function startButtonClicked(){
+    console.log("Start!");
+    start = true
+}
+
+// function killButtonClicked(){
+//     console.log("kill kill kill");
+// }
 
 let charInfo = {
     char1: {
@@ -122,10 +136,10 @@ let anims = {
             translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
-            if (charInfo.char1.animTime < 2.2) {
-                translate(0, 0, charInfo.char1.animTime * -75);
+            if (charInfo.char1.animTime < 1.5) {
+                translate(0, 0, charInfo.char1.animTime * -80);
             } else {
-                translate(0, 0, -165);
+                translate(0, 0, -120);
             }
             if (charInfo.char1.animTime < 0.5) {
                 drawChar1((charInfo.char1.animTime * 160), 0, (charInfo.char1.animTime * 160), 0, 0, (charInfo.char1.animTime * 180), 0, (charInfo.char1.animTime * -180), 0, (charInfo.char1.animTime * 15));
@@ -134,9 +148,15 @@ let anims = {
             }
             pop();
         },
-        //special0: function(t, dt) {
-        //
-        //},
+        special: function(t, dt) {
+            charInfo.char1.animTime += dt;
+            push();
+            translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
+            healthBar("char1");
+            rotateY(charInfo.char1.rotY);
+            drawChar1(180);
+            pop();
+        },
     },
     char2: {
         idle: function (t, dt) {
@@ -188,16 +208,18 @@ let anims = {
             if (charInfo.char2.animTime >= 1.75) [
                 translate(0, 0, -112.5 + ((charInfo.char2.animTime - 1.75) * 75))
             ]
-            drawChar2(110, -15, 0, 0);
-            translate(-30, -100, 50);
-            rotateZ(140);
-            drawSword2();
-
+            drawChar2(110, -15, 0, 0, 0, 0, 140);
             pop();
         },
-        //ko: function (t, dt) {
-        //
-        //},
+        ko: function (t, dt) {
+            charInfo.char2.animTime += dt;
+            push();
+            translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
+            healthBar("char2");
+            rotateY(charInfo.char2.rotY);
+            drawChar2(180);
+            pop();
+        },
     },
     // char3: {
     //     idle: function (t, dt) {
@@ -226,7 +248,7 @@ let scenes = {
         charInfo.char1.wpnState = "sheathed"
         charInfo.char2.wpnState = "sheathed"
 
-        if (sceneTime > 3) {
+        if (start == true) {
             resetAnims()
             sceneTime = 0;
             currentScene = "sceneTwo";
@@ -259,8 +281,30 @@ let scenes = {
         charInfo.char1.rotY = 90;
         charInfo.char2.posX = 90;
         charInfo.char2.rotY = -90;
-        charInfo.char1.wpnState = "held"
-        charInfo.char2.wpnState = "held"
+        charInfo.char1.wpnState = "held";
+        charInfo.char2.wpnState = "held";
+        if (sceneTime >= .75) {
+            charInfo.char1.stats.hp = 67;
+        }
+        if (sceneTime >= 1.7) {
+            charInfo.char1.stats.hp = 34;
+        }
+        if (sceneTime >= 3.25) {
+            sceneTime = 0;
+            resetAnims();
+            currentScene = "sceneFour";
+        }
+    },
+    sceneFour: function (t, dt) {
+        sceneTime += dt
+        charInfo.char1.currentAnim = anims.char1.special;
+        charInfo.char2.currentAnim = anims.char2.ko;
+        charInfo.char1.posX = -90;
+        charInfo.char1.rotY = 90;
+        charInfo.char2.posX = 90;
+        charInfo.char2.rotY = -90;
+        charInfo.char1.wpnState = "held";
+        charInfo.char2.wpnState = "held";
     }
 }
 
