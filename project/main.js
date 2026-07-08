@@ -25,6 +25,8 @@ let charInfo = {
         posY: 0,
         posZ: 0,
         rotY: 0,
+        currentWpn: "sword",
+        wpnState: "held",
     },
     char2: {
         stats: {
@@ -38,13 +40,20 @@ let charInfo = {
         posY: 0,
         posZ: 0,
         rotY: 0,
+        currentWpn: "sword2",
+        wpnState: "held",
     },
     char3: {
         stats: {
             maxHp: 100,
             hp: 100,
         },
-        visible: false
+        visible: false,
+        posX: 0,
+        posY: 0,
+        posZ: 0,
+        rotY: 0,
+        wpnState: "held",
     }
 }
 
@@ -82,7 +91,7 @@ let anims = {
             translate(-15, -100, -30);
             rotateY(90);
             rotateX(210);
-            drawSword();
+            //drawSword();
             pop();
         },
         attack: function (t, dt) {
@@ -92,28 +101,18 @@ let anims = {
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
             if (charInfo.char1.animTime < 1) {
-                drawChar1(45, -40, 45, -40);
-                translate(0, -50, 40);
-                rotateX(-60 + charInfo.char1.animTime * 50);
-                drawSword();
+                drawChar1(45, -40, 45, -40,(-15 + charInfo.char1.animTime * 50),0,0);
             } if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
                 translate(0, 0, (charInfo.char1.animTime - 1) * 100);
-                drawChar1(45, -40, 45, -40);
-                translate(0, -50, 40);
-                rotateX(-10 - (charInfo.char1.animTime - 1) * 150);
-                drawSword();
+                drawChar1(45, -40, 45, -40,(30 - (charInfo.char1.animTime - 1) * 150),0,0);
             }
             if (charInfo.char1.animTime > 1.75 && charInfo.char1.animTime < 3.25) {
                 translate(0, 0, 75 - (charInfo.char1.animTime - 1.75) * 50)
-                drawChar1();
-                translate(-35, -40, 0);
-                rotateX(-122.5 + (charInfo.char1.animTime - 1.75) * 20);
-                drawSword();
+                drawChar1(0,0,0,0,(-30 + (charInfo.char1.animTime - 1.75) * 20),0,0);
             }
             if (charInfo.char1.animTime >= 3.25) {
                 drawChar1();
                 translate(-35, -40, 0);
-                translate(0, 0, charInfo.char1.animTime * 10);
             }
             pop();
         },
@@ -123,7 +122,25 @@ let anims = {
             translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
-            //here
+            if (charInfo.char1.animTime < 2.2) {
+                translate(0, 0, charInfo.char1.animTime * -75);
+            } else {
+                translate(0, 0, -165);
+            }
+            if (charInfo.char1.animTime < 0.5) {
+                drawChar1((charInfo.char1.animTime * 160), 0, 0, 0, charInfo.char1.animTime * 90, -10, -10, -10);
+                // translate(-35 + (charInfo.char1.animTime * -40), -40 + (charInfo.char1.animTime * -78), (charInfo.char1.animTime * 90));
+                // rotateZ(180 * charInfo.char1.animTime);
+                // rotateY(180 * charInfo.char1.animTime);
+                // drawSword();
+                rotate();
+            } else {
+                drawChar1(80)
+                translate(-40, -78, 45);
+                rotateZ(90);
+                rotateY(90);
+                drawSword();
+            }
             pop();
         },
         //special0: function(t, dt) {
@@ -154,33 +171,33 @@ let anims = {
             rotateY(charInfo.char2.rotY);
 
             if (charInfo.char2.animTime <= 1) {
-                translate(0,0,charInfo.char2.animTime * 75);
-                drawChar2();
+                translate(0, 0, charInfo.char2.animTime * 75);
+                drawChar2(110, -15, 0, 0);
                 translate(-30, -100, 50);
                 rotateZ(140);
                 rotateX((charInfo.char2.animTime) * -90);
             }
             if (charInfo.char2.animTime > 1 && charInfo.char2.animTime <= 1.2) {
-                translate(0,0,75);
-                drawChar2();
+                translate(0, 0, 75);
+                drawChar2(110, -15, 0, 0);
                 translate(-30, -100, 50);
                 rotateZ(140);
                 rotateX(-90);
             }
             if (charInfo.char2.animTime > 1.2 && charInfo.char2.animTime <= 2.2) {
-                translate(0,0,(charInfo.char2.animTime - 0.2)*75);
-                drawChar2();
+                translate(0, 0, (charInfo.char2.animTime - 0.2) * 75);
+                drawChar2(110 - (charInfo.char2.animTime - 1.2) * 40, -15 - (charInfo.char2.animTime - 1.2) * 25, 0, 0);
                 translate(-30, -100, 50);
                 rotateZ(140);
-                translate(0, -(charInfo.char2.animTime - 1.2) * 50, 0)
+                translate(0, -(charInfo.char2.animTime - 1.2) * 50, -10 * (charInfo.char2.animTime - 1.2))
                 rotateX(-90);
                 rotateY(180);
                 rotateX((charInfo.char2.animTime - 1.2) * -90);
             }
             if (charInfo.char2.animTime > 2.2) {
-                translate(0,0,150);
-                drawChar2();
-                translate(-30, -100, 50);
+                translate(0, 0, 150);
+                drawChar2(70, -40, 0, 0);
+                translate(-30, -100, 40);
                 rotateZ(140);
                 translate(0, -50, 0);
                 rotateY(180);
@@ -235,8 +252,10 @@ let scenes = {
         charInfo.char2.currentAnim = anims.char2.idle;
         charInfo.char1.posX = -90;
         charInfo.char2.posX = 90;
+        charInfo.char1.wpnState = "sheathed"
+        charInfo.char2.wpnState = "sheathed"
 
-        if (sceneTime > 5) {
+        if (sceneTime > 3) {
             resetAnims()
             sceneTime = 0;
             currentScene = "sceneTwo";
@@ -255,6 +274,8 @@ let scenes = {
         charInfo.char1.rotY = 90;
         charInfo.char2.posX = 90;
         charInfo.char2.rotY = -90;
+        charInfo.char1.wpnState = "held"
+        charInfo.char2.wpnState = "held"
         if (sceneTime >= 1.5) {
             charInfo.char2.stats.hp = 98
         }
@@ -267,10 +288,12 @@ let scenes = {
         charInfo.char1.rotY = 90;
         charInfo.char2.posX = 90;
         charInfo.char2.rotY = -90;
+        charInfo.char1.wpnState = "held"
+        charInfo.char2.wpnState = "held"
     }
 }
 
-function drawChar1(armRX, armRZ, armLX, armLZ) {
+function drawChar1(armRX, armRZ, armLX, armLZ, wpnD, wpnX, wpnY, wpnZ) {
     if (armRX == undefined) {
         armRX = 0
     }
@@ -282,6 +305,18 @@ function drawChar1(armRX, armRZ, armLX, armLZ) {
     }
     if (armLZ == undefined) {
         armLZ = 0
+    }
+    if (wpnD == undefined) {
+        wpnD = 0
+    }
+    if (wpnX == undefined) {
+        wpnX = 0
+    }
+    if (wpnY == undefined) {
+        wpnY = 0
+    }
+    if (wpnZ == undefined) {
+        wpnZ = 0
     }
     push();
     strokeWeight(0);
@@ -306,8 +341,15 @@ function drawChar1(armRX, armRZ, armLX, armLZ) {
     rotateX(armRX);
     rotateZ(15 + armRZ);
     translate(0, 25, 0);
+    push();
     fill(115, 227, 250);
     cylinder(6, 50);
+    pop();
+    if (charInfo.char1.wpnState == "held"){
+        translate(0,25,0);
+        rotate(wpnD, [wpnX,wpnY, wpnZ]);
+        wpnInfo[charInfo.char1.currentWpn].draw();
+    }
     pop();
     push();
     fill(115, 227, 250);
@@ -316,6 +358,14 @@ function drawChar1(armRX, armRZ, armLX, armLZ) {
     translate(-24, 0, 0);
     cylinder(10, 20);
     pop();
+    pop();
+    push();
+    if (charInfo.char1.wpnState == "sheathed"){
+        translate(-15, -100, -30);
+        rotateY(90);
+        rotateX(210);
+        wpnInfo[charInfo.char1.currentWpn].draw();
+    }
     pop();
 }
 
@@ -406,6 +456,148 @@ function drawChar3() {
     cylinder(10, 20);
     pop();
     pop();
+}
+
+let wpnInfo = {
+    sword: {
+        stats: {
+            atk: 10
+        },
+        draw: function () {
+            push();
+            strokeWeight(1);
+            translate(0, -20, 0);
+            beginShape();
+            vertex(2.5, 0, 7.5);
+            vertex(2.5, -80, 7.5);
+            vertex(2.5, -87.5, 0);
+            vertex(2.5, -80, -7.5);
+            vertex(2.5, 0, -7.5);
+            endShape();
+            beginShape();
+            vertex(2.5, 0, -7.5);
+            vertex(0, 0, -10);
+            vertex(0, -80, -10);
+            vertex(2.5, -80, -7.5);
+            endShape();
+            beginShape();
+            vertex(0, 0, -10);
+            vertex(-2.5, 0, -7.5);
+            vertex(-2.5, -80, -7.5);
+            vertex(0, -80, -10);
+            endShape();
+            beginShape();
+            vertex(-2.5, 0, 7.5);
+            vertex(-2.5, -80, 7.5);
+            vertex(-2.5, -87.5, 0);
+            vertex(-2.5, -80, -7.5);
+            vertex(-2.5, 0, -7.5);
+            endShape();
+            beginShape();
+            vertex(2.5, 0, 7.5);
+            vertex(0, 0, 10);
+            vertex(0, -80, 10);
+            vertex(2.5, -80, 7.5);
+            endShape();
+            beginShape();
+            vertex(0, 0, 10);
+            vertex(-2.5, 0, 7.5);
+            vertex(-2.5, -80, 7.5);
+            vertex(0, -80, 10);
+            endShape();
+            beginShape();
+            vertex(0, -80, 10);
+            vertex(2.5, -80, 7.5);
+            vertex(2.5, -87.5, 0);
+            vertex(0, -90, 0);
+            endShape();
+            beginShape();
+            vertex(0, -90, 0);
+            vertex(-2.5, -87.5, 0);
+            vertex(-2.5, -80, 7.5);
+            vertex(0, -80, 10);
+            endShape();
+            line(0, -80, 10, 0, -90, 0);
+            beginShape();
+            vertex(-2.5, -87.5, 0);
+            vertex(0, -90, 0);
+            vertex(0, -80, -10);
+            vertex(-2.5, -80, -7.5);
+            endShape();
+            beginShape();
+            vertex(0, -90, 0);
+            vertex(0, -80, -10);
+            vertex(2.5, -80, -7.5);
+            vertex(2.5, -87.5, 0);
+            endShape();
+            translate(0, 5, 0);
+            box(7.5, 10, 35);
+            translate(0, 15, 0);
+            cylinder(2.5, 30,);
+            translate(0, 15, 0);
+            sphere(4)
+            pop();
+
+        },
+    },
+    sword2: {
+        stats: {
+            atk: 20
+        },
+        draw: function () {
+            push();
+            strokeWeight(1)
+            translate(0, -12, 0);
+            beginShape();
+            vertex(1.5, 0, 3);
+            vertex(1.5, -70, 3);
+            vertex(1.5, -80, -5.5);
+            vertex(1.5, 0, -5.5);
+            endShape();
+            beginShape();
+            vertex(-1.5, 0, 3);
+            vertex(-1.5, -70, 3);
+            vertex(-1.5, -80, -5.5);
+            vertex(-1.5, 0, -5.5);
+            endShape();
+            beginShape();
+            vertex(1.5, 0, -5.5);
+            vertex(1.5, -80, -5.5);
+            vertex(0, -85.5, -5.5);
+            vertex(-1.5, -80, -5.5);
+            vertex(-1.5, 0, -5.5);
+            endShape();
+            beginShape();
+            vertex(1.5, 0, 3);
+            vertex(1.5, -70, 3);
+            vertex(0, -72.5, 5.5);
+            vertex(0, 0, 5.5);
+            endShape();
+            beginShape();
+            vertex(-1.5, 0, 3);
+            vertex(-1.5, -70, 3);
+            vertex(0, -72.5, 5.5);
+            vertex(0, 0, 5.5);
+            endShape();
+            beginShape();
+            vertex(1.5, -70, 3);
+            vertex(1.5, -80, -5.5);
+            vertex(0, -85.5, -5.5);
+            vertex(0, -72.5, 5.5);
+            endShape();
+            beginShape();
+            vertex(-1.5, -70, 3);
+            vertex(-1.5, -80, -5.5);
+            vertex(0, -85.5, -5.5);
+            vertex(0, -72.5, 5.5);
+            endShape();
+            translate(0, 2, 0);
+            box(10, 4, 18);
+            translate(0, 12, 0);
+            box(3, 20, 5);
+            pop();
+        }
+    }
 }
 
 function drawSword() {
