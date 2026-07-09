@@ -11,8 +11,6 @@ export function preload() {
 
 //Called once when program loads
 export function setup() {
-    camera(0, -200, 700);
-
     document.getElementById("start").addEventListener('click', startButtonClicked);
     document.getElementById("swap").addEventListener('click', swapButtonClicked);
     document.getElementById("reset").addEventListener('click', resetButtonClicked);
@@ -181,7 +179,8 @@ let anims = {
             rotateY(charInfo.char1.rotY);
             if (charInfo.char1.animTime < 1) {
                 drawChar1(45, -40, 45, -40, (-15 + charInfo.char1.animTime * 50), 0, 0);
-            } if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
+            } 
+            if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
                 translate(0, 0, (charInfo.char1.animTime - 1) * 100);
                 drawChar1(45, -40, 45, -40, (30 - (charInfo.char1.animTime - 1) * 150), 0, 0);
             }
@@ -190,6 +189,7 @@ let anims = {
                 drawChar1(0, 0, 0, 0, (-30 + (charInfo.char1.animTime - 1.75) * 20), 0, 0);
             }
             if (charInfo.char1.animTime >= 3.25) {
+                translate(0, 0, )
                 drawChar1();
                 translate(-35, -40, 0);
             }
@@ -223,17 +223,20 @@ let anims = {
             if (charInfo.char1.animTime < 1){
                 drawChar1(80 + (charInfo.char1.animTime * 100), 0, 80 + (charInfo.char1.animTime * -80), 0, 0, 90 + (charInfo.char1.animTime * -90), 0, -90 + (charInfo.char1.animTime * 90), 0, 15 + (charInfo.char1.animTime * -15))
             } 
-            if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime < 2) {
-                drawChar1(180 + ((charInfo.char1.animTime - 1) * -150),((charInfo.char1.animTime -1) * -15),0,0,((charInfo.char1.animTime - 1) * -45),0,0,0,0,0)
+            if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime < 2){ 
+                drawChar1(180)
             }
-            if (charInfo.char1.animTime >= 2 && charInfo.char2.animTime < 3){
+            if (charInfo.char1.animTime >= 2 && charInfo.char1.animTime < 3) {
+                drawChar1(180 + ((charInfo.char1.animTime - 2) * -150),((charInfo.char1.animTime -2) * -15),0,0,((charInfo.char1.animTime - 2) * -45),0,0,0,0,0)
+            }
+            if (charInfo.char1.animTime >= 3 && charInfo.char2.animTime < 4){
                 drawChar1(30,-15,0,0,-45);
                 push();
                 translate(-30,0,220);
-                drawBreak((charInfo.char1.animTime - 2) * 600);
+                drawBreak((charInfo.char1.animTime - 3) * 600);
                 pop();
             }
-            if (charInfo.char1.animTime >= 3) {
+            if (charInfo.char1.animTime >= 4) {
                 drawChar1(30,-15,0,0,-45);
             }
             pop();
@@ -274,7 +277,6 @@ let anims = {
                 translate(0, 0, 150);
                 drawChar2(40, -30, 0, 0, -90);
             }
-            //drawSword2();
             pop();
         },
         defend: function (t, dt) {
@@ -298,7 +300,25 @@ let anims = {
             translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
             healthBar("char2");
             rotateY(charInfo.char2.rotY);
-            drawChar2(180);
+            if (charInfo.char2.animTime < 2){
+                translate(0,0,150);
+                drawChar2(40 + (charInfo.char2.animTime) * -20, -30 + (charInfo.char2.animTime) * 15, 0, 0, -90 + (charInfo.char2.animTime) * 45);
+            }
+            if (charInfo.char2.animTime >= 2 && charInfo.char2.animTime < 3){
+                translate(0,0,150 - (charInfo.char2.animTime - 2) * 120)
+                drawChar2();
+            }
+            if (charInfo.char2.animTime >= 3 && charInfo.char2.animTime < 4){
+                translate(0, 0, 30);
+                rotateX((charInfo.char2.animTime - 3) * 90);
+                translate(0,(charInfo.char2.animTime - 3) * -75,0);
+                drawChar2();
+            }
+            if (charInfo.char2.animTime >= 4){
+                translate(0,0,-45);
+                rotateX(90);
+                drawChar2();
+            }
             pop();
         },
     },
@@ -333,27 +353,27 @@ let anims = {
 }
 
 let horses= {
-    horse1: {
+    1: {
         color: [253, 255, 125],
         currentAnim: "e",
         name: "Johnathan"
     },
-    horse2: {
+    2: {
         color: [125, 255, 136],
         currentAnim: "d",
         name: "Winning Ticket"
     },
-    horse3: {
+    3: {
         color: [140, 245, 255],
         currentAnim: "c",
         name: "Harry Potter"
     },
-    horse4: {
+    4: {
         color: [198, 140, 255],
         currentAnim: "b",
         name: "Owesn Edgecombarlow"
     },
-    horse5: {
+    5: {
         color: [255, 143, 233],
         currentAnim: "a",
         name: "Bullshit With Fur"
@@ -366,6 +386,7 @@ let sceneTime = 0;
 
 let scenes = {
     startMenu: function (t, dt) {
+        camera(0, -200, 700);
         sceneTime += dt;
         drawGround();
         charInfo.char1.visible = true
@@ -378,6 +399,7 @@ let scenes = {
         charInfo.char2.wpnState = "sheathed"
     },
     sceneTwo: function (t, dt) {
+        camera(0, -200, 700);
         sceneTime += dt
         drawGround();
         if (sceneTime >= 3.25) {
@@ -398,6 +420,7 @@ let scenes = {
         }
     },
     sceneThree: function (t, dt) {
+        camera(0, -200, 700);
         sceneTime += dt
         drawGround();
         charInfo.char1.currentAnim = anims.char1.defend;
@@ -421,6 +444,7 @@ let scenes = {
         }
     },
     sceneFour: function (t, dt) {
+        camera(0, -200, 700);
         sceneTime += dt
         drawGround();
         charInfo.char1.currentAnim = anims.char1.special;
@@ -435,15 +459,24 @@ let scenes = {
             charInfo.char1.wpnState = "held"
         }
         charInfo.char2.wpnState = "held";
+        if (sceneTime < 3){
+            charInfo.char2.stats.hp = 98
+        }
+        if (sceneTime >= 3 && sceneTime < 4){
+            charInfo.char2.stats.hp = 98 + ((sceneTime - 3) * -99)
+        }
     },
     horse1: function (t, dt) {
+        camera(0, -0, 700);
         sceneTime += dt
         charInfo.char1.visible = false
         charInfo.char2.visible = false
         drawCourse();
     },
     horse2: function (t, dt) {
+        camera(0, -0, 700);
         sceneTime += dt
+        drawCourse();
         //ill get to this later
     }
 }
@@ -460,13 +493,18 @@ function drawGround() {
 
 function drawCourse() {
     push();
+    translate(0,-0,0)
+    plane(1000,500,100,100)
     strokeWeight(3);
-    line(-250,0,250,250,0,250)
-    line(-250,-50,250,250,-50,250)
-    line(-250,-100,250,250,-100,250)
-    line(-250,-150,250,250,-150,250)
-    line(-250,-200,250,250,-200,250)
-    line(-250,-250,250,250,-250,250)
+    line(-500,250,0,500,250,0)
+    line(-500,150,0,500,150,0)
+    line(-500,50,0,500,50,0)
+    line(-500,-50,0,500,-50,0)
+    line(-500,-150,0,500,-150,0)
+    line(-500,-250,0,500,-250,0)
+    fill("green")
+    translate(450,0,1)
+    plane(100,500,100,100)
     pop();
 }
 
@@ -1004,6 +1042,9 @@ function healthBar(char) {
     fill(0, 0, 0);
     box(110, 30, 20);
     fill(255, 255, 255);
+    if (percent < 1){
+        fill(255,0,0);
+    }
     translate(0, 0, 0.01);
     box(100, 25, 20);
     fill("green");
@@ -1031,14 +1072,17 @@ function updateText() {
 
 let textScenes = {
     startMenu: function() {
+        push();
         resetMatrix();
-       // box();
-        scale(.5);
         fill(255,255,255);
         stroke(255);
         textFont(font);
         textSize(36);
-        text("test",0,0,0)
+        translate(-0,-160,499)
+        box(185,40,1)
+        translate(-90,14,1);
+        text("Press Start",0,0)
+        pop();
     },
     sceneTwo: function() {
         
@@ -1047,6 +1091,33 @@ let textScenes = {
         
     },
     sceneFour: function() {
+        if (sceneTime >=1 && sceneTime < 2){
+            push();
+            resetMatrix();
+            fill(255,255,255);
+            stroke(255, 234, 0);
+            textFont(font);
+            textSize(36);
+            translate(20,-160,499)
+            box(290,80,1)
+            translate(-95,-10,1);
+            text("Ultimate:",0,0)
+            text("Thundering Blade", -50, 40)
+            pop();
+        }
+        if (sceneTime >= 5){
+            push();
+            resetMatrix();
+            fill(255,255,255);
+            stroke(0,0,255);
+            textFont(font);
+            textSize(36);
+            translate(-0,-160,499)
+            box(185,40,1)
+            translate(-85,14,1);
+            text("Blue Wins!",0,0)
+            pop();
+        }
         
     },
     horse1: function() {
