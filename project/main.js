@@ -2,9 +2,11 @@ import { drawGrid } from "@/utils/grid.js";
 import { drawAxes } from '@/utils/axes.js';
 import { vector } from "@/utils/vec3.js";
 
+let font;
+
 //We can use this to load textures or sounds
 export function preload() {
-
+    font = loadFont("https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf");
 }
 
 //Called once when program loads
@@ -1022,16 +1024,38 @@ function updateAnims(t, dt) {
     }
 }
 
-// let currentText;
 
-// function updateText() {
-//     //Like add the text man..........
-//     if (currentText != undefined && currentText != "none") {
-//         textFont();
-//         textSize();
-//         text(currentText)
-//     }
-// }
+function updateText() {
+    textScenes[currentScene]();    
+}
+
+let textScenes = {
+    startMenu: function() {
+        resetMatrix();
+       // box();
+        scale(.5);
+        fill(255,255,255);
+        stroke(255);
+        textFont(font);
+        textSize(36);
+        text("test",0,0,0)
+    },
+    sceneTwo: function() {
+        
+    },
+    sceneThree: function() {
+        
+    },
+    sceneFour: function() {
+        
+    },
+    horse1: function() {
+        
+    },
+    horse2: function() {
+        
+    },
+}
 
 //Called every frame
 export function draw(t, dt) {
@@ -1051,6 +1075,6 @@ export function draw(t, dt) {
 
     updateAnims(t, dt);
 
-    //updateText();
+    updateText();
 
 }
