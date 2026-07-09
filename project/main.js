@@ -21,7 +21,34 @@ export function setup() {
     document.getElementById("5").addEventListener('click', fiveButtonClicked);
 }
 
-function startButtonClicked(){
+let temp = ["zero", "one", "two", "three", "four"]
+
+// Source - https://stackoverflow.com/a/2450976
+// Posted by ChristopheD, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-07-09, License - CC BY-SA 4.0
+
+function shuffle(array) {
+    let currentIndex = array.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+
+        // Pick a remaining element...
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+}
+// the above array shuffler was copied from StackOverflow
+
+function randomSelect() {
+    return Math.floor(Math.random() * temp.length)
+}
+
+function startButtonClicked() {
     console.log("Start!");
     sceneTime = 0
     resetAnims();
@@ -29,8 +56,14 @@ function startButtonClicked(){
         currentScene = "sceneTwo"
     }
     if (currentScene == "horse1") {
-        if (chosenHorse != undefined){
-        currentScene = "horse2"
+        if (chosenHorse != undefined) {
+            currentScene = "horse2";
+            shuffle(temp);
+            horses[temp[0]].place = 1
+            horses[temp[1]].place = 2
+            horses[temp[2]].place = 3
+            horses[temp[3]].place = 4
+            horses[temp[4]].place = 5
         } else {
             console.log("choose a horse")
         }
@@ -38,54 +71,56 @@ function startButtonClicked(){
 
 }
 
-function swapButtonClicked(){
+let money = 100
+
+function swapButtonClicked() {
     if (currentScene == "startMenu") {
         resetAnims();
         sceneTime = 0
         currentScene = "horse1"
     } else if (currentScene == "horse1") {
-        resetAnims(); 
+        resetAnims();
         sceneTime = 0;
         currentScene = "startMenu"
     }
 }
 
-function resetButtonClicked(){
+function resetButtonClicked() {
     resetAnims();
     charInfo.char1.stats.hp = 100
     charInfo.char2.stats.hp = 100
     currentScene = "startMenu"
 }
 
-let chosenHorse;
+let chosenHorse = "zero";
 
 function oneButtonClicked() {
     if (currentScene == "horse1") {
-        chosenHorse = 1
+        chosenHorse = "zero"
     }
 }
 
 function twoButtonClicked() {
     if (currentScene == "horse1") {
-        chosenHorse = 2
+        chosenHorse = "one"
     }
 }
 
 function threeButtonClicked() {
     if (currentScene == "horse1") {
-        chosenHorse = 3
+        chosenHorse = "two"
     }
 }
 
 function fourButtonClicked() {
     if (currentScene == "horse1") {
-        chosenHorse =4
+        chosenHorse = "three"
     }
 }
 
 function fiveButtonClicked() {
     if (currentScene == "horse1") {
-        chosenHorse = 5
+        chosenHorse = "four"
     }
 }
 
@@ -179,7 +214,7 @@ let anims = {
             rotateY(charInfo.char1.rotY);
             if (charInfo.char1.animTime < 1) {
                 drawChar1(45, -40, 45, -40, (-15 + charInfo.char1.animTime * 50), 0, 0);
-            } 
+            }
             if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime <= 1.75) {
                 translate(0, 0, (charInfo.char1.animTime - 1) * 100);
                 drawChar1(45, -40, 45, -40, (30 - (charInfo.char1.animTime - 1) * 150), 0, 0);
@@ -189,7 +224,7 @@ let anims = {
                 drawChar1(0, 0, 0, 0, (-30 + (charInfo.char1.animTime - 1.75) * 20), 0, 0);
             }
             if (charInfo.char1.animTime >= 3.25) {
-                translate(0, 0, )
+                translate(0, 0,)
                 drawChar1();
                 translate(-35, -40, 0);
             }
@@ -213,31 +248,31 @@ let anims = {
             }
             pop();
         },
-        special: function(t, dt) {
+        special: function (t, dt) {
             charInfo.char1.animTime += dt;
             push();
             translate(charInfo.char1.posX, charInfo.char1.posY, charInfo.char1.posZ);
             healthBar("char1");
             rotateY(charInfo.char1.rotY);
-            translate(0,0,-120);
-            if (charInfo.char1.animTime < 1){
+            translate(0, 0, -120);
+            if (charInfo.char1.animTime < 1) {
                 drawChar1(80 + (charInfo.char1.animTime * 100), 0, 80 + (charInfo.char1.animTime * -80), 0, 0, 90 + (charInfo.char1.animTime * -90), 0, -90 + (charInfo.char1.animTime * 90), 0, 15 + (charInfo.char1.animTime * -15))
-            } 
-            if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime < 2){ 
+            }
+            if (charInfo.char1.animTime >= 1 && charInfo.char1.animTime < 2) {
                 drawChar1(180)
             }
             if (charInfo.char1.animTime >= 2 && charInfo.char1.animTime < 3) {
-                drawChar1(180 + ((charInfo.char1.animTime - 2) * -150),((charInfo.char1.animTime -2) * -15),0,0,((charInfo.char1.animTime - 2) * -45),0,0,0,0,0)
+                drawChar1(180 + ((charInfo.char1.animTime - 2) * -150), ((charInfo.char1.animTime - 2) * -15), 0, 0, ((charInfo.char1.animTime - 2) * -45), 0, 0, 0, 0, 0)
             }
-            if (charInfo.char1.animTime >= 3 && charInfo.char2.animTime < 4){
-                drawChar1(30,-15,0,0,-45);
+            if (charInfo.char1.animTime >= 3 && charInfo.char2.animTime < 4) {
+                drawChar1(30, -15, 0, 0, -45);
                 push();
-                translate(-30,0,220);
+                translate(-30, 0, 220);
                 drawBreak((charInfo.char1.animTime - 3) * 600);
                 pop();
             }
             if (charInfo.char1.animTime >= 4) {
-                drawChar1(30,-15,0,0,-45);
+                drawChar1(30, -15, 0, 0, -45);
             }
             pop();
         },
@@ -300,22 +335,22 @@ let anims = {
             translate(charInfo.char2.posX, charInfo.char2.posY, charInfo.char2.posZ);
             healthBar("char2");
             rotateY(charInfo.char2.rotY);
-            if (charInfo.char2.animTime < 2){
-                translate(0,0,150);
+            if (charInfo.char2.animTime < 2) {
+                translate(0, 0, 150);
                 drawChar2(40 + (charInfo.char2.animTime) * -20, -30 + (charInfo.char2.animTime) * 15, 0, 0, -90 + (charInfo.char2.animTime) * 45);
             }
-            if (charInfo.char2.animTime >= 2 && charInfo.char2.animTime < 3){
-                translate(0,0,150 - (charInfo.char2.animTime - 2) * 120)
+            if (charInfo.char2.animTime >= 2 && charInfo.char2.animTime < 3) {
+                translate(0, 0, 150 - (charInfo.char2.animTime - 2) * 120)
                 drawChar2();
             }
-            if (charInfo.char2.animTime >= 3 && charInfo.char2.animTime < 4){
+            if (charInfo.char2.animTime >= 3 && charInfo.char2.animTime < 4) {
                 translate(0, 0, 30);
                 rotateX((charInfo.char2.animTime - 3) * 90);
-                translate(0,(charInfo.char2.animTime - 3) * -75,0);
+                translate(0, (charInfo.char2.animTime - 3) * -75, 0);
                 drawChar2();
             }
-            if (charInfo.char2.animTime >= 4){
-                translate(0,0,-45);
+            if (charInfo.char2.animTime >= 4) {
+                translate(0, 0, -45);
                 rotateX(90);
                 drawChar2();
             }
@@ -334,49 +369,54 @@ let anims = {
     //     },
     // },
     horse: {
-        first: function(horse) {
+        first: function (horse) {
 
         },
-        second: function(horse) {
+        second: function (horse) {
 
         },
-        third: function(horse) {
+        third: function (horse) {
 
         },
-        fourth: function(horse) {
+        fourth: function (horse) {
 
         },
-        fifth: function(horse) {
+        fifth: function (horse) {
 
         },
     }
 }
 
-let horses= {
-    1: {
+let horses = {
+    zero: {
         color: [253, 255, 125],
         currentAnim: "e",
-        name: "Johnathan"
+        name: "Johnathan",
+        place: 0
     },
-    2: {
+    one: {
         color: [125, 255, 136],
         currentAnim: "d",
-        name: "Winning Ticket"
+        name: "Winning Ticket",
+        place: 0
     },
-    3: {
+    two: {
         color: [140, 245, 255],
         currentAnim: "c",
-        name: "Harry Potter"
+        name: "Harry Potter",
+        place: 0
     },
-    4: {
+    three: {
         color: [198, 140, 255],
         currentAnim: "b",
-        name: "Owesn Edgecombarlow"
+        name: "Owesn Edgecombarlow",
+        place: 0
     },
-    5: {
+    four: {
         color: [255, 143, 233],
         currentAnim: "a",
-        name: "Bullshit With Fur"
+        name: "Bullshit With Fur",
+        place: 0
     },
 }
 
@@ -453,16 +493,16 @@ let scenes = {
         charInfo.char1.rotY = 90;
         charInfo.char2.posX = 90;
         charInfo.char2.rotY = -90;
-        if (sceneTime > 1){
+        if (sceneTime > 1) {
             charInfo.char1.wpnState = "super";
         } else {
             charInfo.char1.wpnState = "held"
         }
         charInfo.char2.wpnState = "held";
-        if (sceneTime < 3){
+        if (sceneTime < 3) {
             charInfo.char2.stats.hp = 98
         }
-        if (sceneTime >= 3 && sceneTime < 4){
+        if (sceneTime >= 3 && sceneTime < 4) {
             charInfo.char2.stats.hp = 98 + ((sceneTime - 3) * -99)
         }
     },
@@ -484,27 +524,27 @@ let scenes = {
 function drawGround() {
     push();
     fill("green");
-    box(500,1,500)
-    translate(0,13,0);
+    box(500, 1, 500)
+    translate(0, 13, 0);
     fill(133, 73, 0)
-    box(500,25,500)
+    box(500, 25, 500)
     pop();
 }
 
 function drawCourse() {
     push();
-    translate(0,-0,0)
-    plane(1000,500,100,100)
+    translate(0, -0, 0)
+    plane(1000, 500, 100, 100)
     strokeWeight(3);
-    line(-500,250,0,500,250,0)
-    line(-500,150,0,500,150,0)
-    line(-500,50,0,500,50,0)
-    line(-500,-50,0,500,-50,0)
-    line(-500,-150,0,500,-150,0)
-    line(-500,-250,0,500,-250,0)
+    line(-500, 250, 0, 500, 250, 0)
+    line(-500, 150, 0, 500, 150, 0)
+    line(-500, 50, 0, 500, 50, 0)
+    line(-500, -50, 0, 500, -50, 0)
+    line(-500, -150, 0, 500, -150, 0)
+    line(-500, -250, 0, 500, -250, 0)
     fill("green")
-    translate(450,0,1)
-    plane(100,500,100,100)
+    translate(450, 0, 1)
+    plane(100, 500, 100, 100)
     pop();
 }
 
@@ -584,7 +624,7 @@ function drawChar1(armRX, armRZ, armLX, armLZ, wpnX, wpnY, wpnZ, wpnX2, wpnY2, w
         rotateX(wpnX2);
         rotateY(wpnY2);
         rotateZ(wpnZ2);
-        scale(1,2,1);
+        scale(1, 2, 1);
         fill("yellow");
         wpnInfo[charInfo.char1.currentWpn].draw();
     }
@@ -1008,24 +1048,24 @@ function drawSword2() {
 
 function drawBreak(temp) {
     strokeWeight(0);
-    for (let a = 0; a < 24; a++){
-        if (a < 12){
+    for (let a = 0; a < 24; a++) {
+        if (a < 12) {
             push();
-            translate(0,20,0);
+            translate(0, 20, 0);
             fill(133, 73, 0)
             rotateY(30 * a);
             rotateX(-70);
-            translate(0,-temp,0);
-            box(15,40,5);
+            translate(0, -temp, 0);
+            box(15, 40, 5);
             pop();
         } else {
             push();
-            translate(0,20,0);
+            translate(0, 20, 0);
             fill(133, 73, 0)
             rotateY(30 * a + 15);
             rotateX(-60);
-            translate(0,-temp/1.5,0);
-            box(10,40,5);
+            translate(0, -temp / 1.5, 0);
+            box(10, 40, 5);
             pop();
 
         }
@@ -1042,8 +1082,8 @@ function healthBar(char) {
     fill(0, 0, 0);
     box(110, 30, 20);
     fill(255, 255, 255);
-    if (percent < 1){
-        fill(255,0,0);
+    if (percent < 1) {
+        fill(255, 0, 0);
     }
     translate(0, 0, 0.01);
     box(100, 25, 20);
@@ -1067,64 +1107,75 @@ function updateAnims(t, dt) {
 
 
 function updateText() {
-    textScenes[currentScene]();    
+    textScenes[currentScene]();
 }
 
 let textScenes = {
-    startMenu: function() {
+    startMenu: function () {
         push();
         resetMatrix();
-        fill(255,255,255);
+        fill(255, 255, 255);
         stroke(255);
         textFont(font);
         textSize(36);
-        translate(-0,-160,499)
-        box(185,40,1)
-        translate(-90,14,1);
-        text("Press Start",0,0)
+        translate(-0, -160, 499)
+        box(185, 40, 1)
+        translate(-90, 14, 1);
+        text("Press Start", 0, 0)
         pop();
     },
-    sceneTwo: function() {
-        
+    sceneTwo: function () {
+
     },
-    sceneThree: function() {
-        
+    sceneThree: function () {
+
     },
-    sceneFour: function() {
-        if (sceneTime >=1 && sceneTime < 2){
+    sceneFour: function () {
+        if (sceneTime >= 1 && sceneTime < 2) {
             push();
             resetMatrix();
-            fill(255,255,255);
+            fill(255, 255, 255);
             stroke(255, 234, 0);
             textFont(font);
             textSize(36);
-            translate(20,-160,499)
-            box(290,80,1)
-            translate(-95,-10,1);
-            text("Ultimate:",0,0)
+            translate(20, -160, 499)
+            box(290, 80, 1)
+            translate(-95, -10, 1);
+            text("Ultimate:", 0, 0)
             text("Thundering Blade", -50, 40)
             pop();
         }
-        if (sceneTime >= 5){
+        if (sceneTime >= 5) {
             push();
             resetMatrix();
-            fill(255,255,255);
-            stroke(0,0,255);
+            fill(255, 255, 255);
+            stroke(0, 0, 255);
             textFont(font);
             textSize(36);
-            translate(-0,-160,499)
-            box(185,40,1)
-            translate(-85,14,1);
-            text("Blue Wins!",0,0)
+            translate(-0, -160, 499)
+            box(185, 40, 1)
+            translate(-85, 14, 1);
+            text("Blue Wins!", 0, 0)
             pop();
         }
-        
+
     },
-    horse1: function() {
-        
+    horse1: function () {
+        push();
+        resetMatrix();
+        fill(255, 255, 255);
+        stroke(255);
+        textFont(font);
+        textSize(36);
+        translate(0, 0, 5)
+        //box(185, 40, 0)
+        translate(-0, 0, 0);
+        text("Selected Horse: " + horses[chosenHorse].name, -300, -300)
+        text("$" + money, 600, -300)
+        pop();
     },
-    horse2: function() {
-        
+    horse2: function () {
+
     },
 }
 
