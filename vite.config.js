@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import inject from '@rollup/plugin-inject';
 import path from 'path'
 
 export default defineConfig({
@@ -9,9 +10,19 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5174
   },
+  base: "",
+  build: {
+    outDir: 'docs', //For gh pages
+    emptyOutDir: true
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
     },
   },
+  plugins: [
+    inject({
+      p5: 'p5',
+    }),
+  ],
 });

@@ -1,17 +1,17 @@
 {
     "files.exclude": {
-        "node_modules": true,
-        ".vscode/": true,
-        "utils/": true,
-        "runner.js": true,
-        "vite.config.js": true,
-        "package.json": true,
-        "package-lock.json": true,
-        ".gitignore": true,
-        "global.d.ts": true,
-        "jsconfig.json": true,
-        "activityChooser.js": true,
-        "README.md": true
+        "node_modules": false,
+        ".vscode/": false,
+        "utils/": false,
+        "runner.js": false,
+        "vite.config.js": false,
+        "package.json": false,
+        "package-lock.json": false,
+        ".gitignore": false,
+        "global.d.ts": false,
+        "jsconfig.json": false,
+        "activityChooser.js": false,
+        "README.md": false
     },
     "editor.quickSuggestions": {
         "comments": "off",
