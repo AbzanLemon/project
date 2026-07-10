@@ -19,9 +19,25 @@ export function setup() {
     document.getElementById("3").addEventListener('click', threeButtonClicked);
     document.getElementById("4").addEventListener('click', fourButtonClicked);
     document.getElementById("5").addEventListener('click', fiveButtonClicked);
+    document.getElementById("+").addEventListener('click', plusButtonClicked);
+    document.getElementById("-").addEventListener('click', minusButtonClicked);
 }
 
 let temp = ["zero", "one", "two", "three", "four"]
+
+let bet = 0
+
+function plusButtonClicked(){
+    if (bet < money){
+        bet += 1
+    }
+}
+
+function minusButtonClicked(){
+    if ( bet > 0 ) {
+        bet -= 1
+    }
+}
 
 // Source - https://stackoverflow.com/a/2450976
 // Posted by ChristopheD, modified by community. See post 'Timeline' for change history
@@ -58,6 +74,7 @@ function startButtonClicked() {
     if (currentScene == "horse1") {
         if (chosenHorse != undefined) {
             currentScene = "horse2";
+            money -= bet
             shuffle(temp);
             horses[temp[0]].place = 1
             horses[temp[1]].place = 2
@@ -67,6 +84,10 @@ function startButtonClicked() {
         } else {
             console.log("choose a horse")
         }
+    }
+    if (currentScene == "horse3") {
+        currentScene = "horse1"
+        bet = 0
     }
 
 }
@@ -90,37 +111,46 @@ function resetButtonClicked() {
     charInfo.char1.stats.hp = 100
     charInfo.char2.stats.hp = 100
     currentScene = "startMenu"
+    money = 100
+    bet = 0
 }
 
 let chosenHorse = "zero";
 
+let slot = 0
+
 function oneButtonClicked() {
     if (currentScene == "horse1") {
         chosenHorse = "zero"
+        slot = 0
     }
 }
 
 function twoButtonClicked() {
     if (currentScene == "horse1") {
         chosenHorse = "one"
+        slot = 1
     }
 }
 
 function threeButtonClicked() {
     if (currentScene == "horse1") {
         chosenHorse = "two"
+        slot = 2
     }
 }
 
 function fourButtonClicked() {
     if (currentScene == "horse1") {
         chosenHorse = "three"
+        slot = 3
     }
 }
 
 function fiveButtonClicked() {
     if (currentScene == "horse1") {
         chosenHorse = "four"
+        slot = 4
     }
 }
 
@@ -368,55 +398,701 @@ let anims = {
 
     //     },
     // },
-    horse: {
-        first: function (horse) {
-
+    zero: {
+        first: function () {
+            push(); 
+            if (sceneTime < 5){
+            translate(-450 + sceneTime * 190 ,-160,1)
+            drawHorse0()
+            } else {
+                translate(500,-160,1)
+                drawHorse0()
+            }
+            pop();
         },
-        second: function (horse) {
-
+        second: function () {
+            push(); 
+            if (sceneTime < 6){
+            translate(-450 + sceneTime * 158.33 ,-160,1)
+            drawHorse0()
+            } else {
+                translate(500,-160,1)
+                drawHorse0()
+            }
+            pop();
         },
-        third: function (horse) {
-
+        third: function () {
+            push(); 
+            if (sceneTime < 7){
+            translate(-450 + sceneTime * 125.71 ,-160,1)
+            drawHorse0()
+            } else {
+                translate(500,-160,1)
+                drawHorse0()
+            }
+            pop();
         },
-        fourth: function (horse) {
-
+        fourth: function () {
+            push(); 
+            if (sceneTime < 8){
+            translate(-450 + sceneTime * 118.75 ,-160,1)
+            drawHorse0()
+            } else {
+                translate(500,-160,1)
+                drawHorse0()
+            }
+            pop();
         },
-        fifth: function (horse) {
-
+        fifth: function () {
+            push(); 
+            if (sceneTime < 9){
+            translate(-450 + sceneTime * 105.55 ,-160,1)
+            drawHorse0()
+            } else {
+                translate(500,-160,1)
+                drawHorse0()
+            }
+            pop();
         },
-    }
+        idle: function () {
+            push();
+            translate(-450,-160,0)
+            drawHorse0()
+            pop();
+        },
+        finish: function () {
+            push();
+            translate(500,-160,1)
+            drawHorse0()
+            pop();
+        }
+    },
+    one: {
+        first: function () {
+            push(); 
+            if (sceneTime < 5){
+            translate(-450 + sceneTime * 190 ,-60,1)
+            drawHorse1()
+            } else {
+                translate(500,-60,1)
+                drawHorse1()
+            }
+            pop();
+        },
+        second: function () {
+            push(); 
+            if (sceneTime < 6){
+            translate(-450 + sceneTime * 158.33 ,-60,1)
+            drawHorse1()
+            } else {
+                translate(500,-60,1)
+                drawHorse1()
+            }
+            pop();
+        },
+        third: function () {
+            push(); 
+            if (sceneTime < 7){
+            translate(-450 + sceneTime * 125.71 ,-60,1)
+            drawHorse1()
+            } else {
+                translate(500,-60,1)
+                drawHorse1()
+            }
+            pop();
+        },
+        fourth: function () {
+            push(); 
+            if (sceneTime < 8){
+            translate(-450 + sceneTime * 118.75 ,-60,1)
+            drawHorse1()
+            } else {
+                translate(500,-60,1)
+                drawHorse1()
+            }
+            pop();
+        },
+        fifth: function () {
+            push(); 
+            if (sceneTime < 9){
+            translate(-450 + sceneTime * 105.55 ,-60,1)
+            drawHorse1()
+            } else {
+                translate(500,-60,1)
+                drawHorse1()
+            }
+            pop();
+        },
+        idle: function () {
+            push();
+            translate(-450,-60,0)
+            drawHorse1()
+            pop();
+            
+        },
+        finish: function () {
+            push();
+            translate(500,-60,1)
+            drawHorse1()
+            pop();
+        }
+    },
+    two: {
+        first: function () {
+            push(); 
+            if (sceneTime < 5){
+            translate(-450 + sceneTime * 190 ,40,1)
+            drawHorse2()
+            } else {
+                translate(500,40,1)
+                drawHorse2()
+            }
+            pop();
+        },
+        second: function () {
+            push(); 
+            if (sceneTime < 6){
+            translate(-450 + sceneTime * 158.33 ,40,1)
+            drawHorse2()
+            } else {
+                translate(500,40,1)
+                drawHorse2()
+            }
+            pop();
+        },
+        third: function () {
+            push(); 
+            if (sceneTime < 7){
+            translate(-450 + sceneTime * 125.71 ,40,1)
+            drawHorse2()
+            } else {
+                translate(500,40,1)
+                drawHorse2()
+            }
+            pop();
+        },
+        fourth: function () {
+            push(); 
+            if (sceneTime < 8){
+            translate(-450 + sceneTime * 118.75 ,40,1)
+            drawHorse2()
+            } else {
+                translate(500,40,1)
+                drawHorse2()
+            }
+            pop();
+        },
+        fifth: function () {
+            push(); 
+            if (sceneTime < 9){
+            translate(-450 + sceneTime * 105.55 ,40,1)
+            drawHorse2()
+            } else {
+                translate(500,40,1)
+                drawHorse2()
+            }
+            pop();
+        },
+        idle: function () {
+            push();
+            translate(-450,40,0)
+            drawHorse2()
+            pop();
+        },
+        finish: function () {
+            push();
+            translate(500,40,1)
+            drawHorse2()
+            pop();
+        }
+    },
+    three: {
+        first: function () {
+            push(); 
+            if (sceneTime < 5){
+            translate(-450 + sceneTime * 190 ,140,1)
+            drawHorse3()
+            } else {
+                translate(500,140,1)
+                drawHorse3()
+            }
+            pop();
+        },
+        second: function () {
+            push(); 
+            if (sceneTime < 6){
+            translate(-450 + sceneTime * 158.33 ,140,1)
+            drawHorse3()
+            } else {
+                translate(500,140,1)
+                drawHorse3()
+            }
+            pop();
+        },
+        third: function () {
+            push(); 
+            if (sceneTime < 7){
+            translate(-450 + sceneTime * 125.71 ,140,1)
+            drawHorse3()
+            } else {
+                translate(500,140,1)
+                drawHorse3()
+            }
+            pop();
+        },
+        fourth: function () {
+            push(); 
+            if (sceneTime < 8){
+            translate(-450 + sceneTime * 118.75 ,140,1)
+            drawHorse3()
+            } else {
+                translate(500,140,1)
+                drawHorse3()
+            }
+            pop();
+        },
+        fifth: function () {
+            push(); 
+            if (sceneTime < 9){
+            translate(-450 + sceneTime * 105.55 ,140,1)
+            drawHorse3()
+            } else {
+                translate(500,140,1)
+                drawHorse3()
+            }
+            pop();
+        },
+        idle: function () {
+            push();
+            translate(-450,140,0)
+            drawHorse3()
+            pop();
+            
+        },
+        finish: function () {
+            push();
+            translate(500,140,1)
+            drawHorse3()
+            pop();
+        }
+    },
+    four: {
+        first: function () {
+            push(); 
+            if (sceneTime < 5){
+            translate(-450 + sceneTime * 190 ,240,1)
+            drawHorse4()
+            } else {
+                translate(500,240,1)
+                drawHorse4()
+            }
+            pop();
+        },
+        second: function () {
+            push(); 
+            if (sceneTime < 6){
+            translate(-450 + sceneTime * 158.33 ,240,1)
+            drawHorse4()
+            } else {
+                translate(500,240,1)
+                drawHorse4()
+            }
+            pop();
+        },
+        third: function () {
+            push(); 
+            if (sceneTime < 7){
+            translate(-450 + sceneTime * 125.71 ,240,1)
+            drawHorse4()
+            } else {
+                translate(500,240,1)
+                drawHorse4()
+            }
+            pop();
+        },
+        fourth: function () {
+            push(); 
+            if (sceneTime < 8){
+            translate(-450 + sceneTime * 118.75 ,240,1)
+            drawHorse4()
+            } else {
+                translate(500,240,1)
+                drawHorse4()
+            }
+            pop();
+        },
+        fifth: function () {
+            push(); 
+            if (sceneTime < 9){
+            translate(-450 + sceneTime * 105.55 ,240,1)
+            drawHorse4()
+            } else {
+                translate(500,240,1)
+                drawHorse4()
+            }
+            pop();
+        },
+        idle: function () {
+            push();
+            translate(-450,240,0)
+            drawHorse4()
+            pop();
+            
+        },
+        finish: function () {
+            push();
+            translate(500,240,1)
+            drawHorse4()
+            pop();
+        }
+    },
+}
+
+function drawHorse1() {
+    push();
+    
+    //Mane
+    fill(horses.one.color)
+    beginShape();
+    vertex(-100,0,0);
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-70,-55,0);
+    vertex(-85,-20,0);
+    endShape();
+
+    //Head
+    fill(horses.one.color)
+    beginShape();
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-47,-75,0);
+    vertex(-42,-78,0);
+    vertex(-40,-70,0);
+    vertex(-25,-60,0);
+    vertex(-22,-50,0);
+    vertex(-5,-38,0);
+    vertex(-3,-32,0);
+    vertex(-5,-26,0);
+    vertex(-10,-20,0)
+    vertex(-29,-25,0);
+    vertex(-25,-5,0);
+    vertex(-26,0,0)
+    endShape();
+
+    //Head Details
+    line(-40,-70,1,-43,-60,1)
+    line(-29,-25,0,-40,-30,0)
+
+    //Eye
+    fill(0,0,0);
+    beginShape();
+    vertex(-37,-59,1);
+    vertex(-33,-60,1);
+    vertex(-30,-58,1);
+    vertex(-27,-55,1);
+    vertex(-29,-52,1);
+    vertex(-36,-55,1);
+    endShape();
+
+    fill(25,25,25);
+    beginShape();
+    vertex(-3,-30,1);
+    vertex(-5,-38,1);
+    vertex(-13,-43,1);
+    vertex(-10,-34,1);
+    endShape();
+
+    pop();
+}
+
+function drawHorse0() {
+    push();
+    
+    //Mane
+    fill(horses.zero.color)
+    beginShape();
+    vertex(-100,0,0);
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-70,-55,0);
+    vertex(-85,-20,0);
+    endShape();
+
+    //Head
+    fill(horses.zero.color)
+    beginShape();
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-47,-75,0);
+    vertex(-42,-78,0);
+    vertex(-40,-70,0);
+    vertex(-25,-60,0);
+    vertex(-22,-50,0);
+    vertex(-5,-38,0);
+    vertex(-3,-32,0);
+    vertex(-5,-26,0);
+    vertex(-10,-20,0)
+    vertex(-29,-25,0);
+    vertex(-25,-5,0);
+    vertex(-26,0,0)
+    endShape();
+
+    //Head Details
+    line(-40,-70,1,-43,-60,1)
+    line(-29,-25,0,-40,-30,0)
+
+    //Eye
+    fill(0,0,0);
+    beginShape();
+    vertex(-37,-59,1);
+    vertex(-33,-60,1);
+    vertex(-30,-58,1);
+    vertex(-27,-55,1);
+    vertex(-29,-52,1);
+    vertex(-36,-55,1);
+    endShape();
+
+    fill(25,25,25);
+    beginShape();
+    vertex(-3,-30,1);
+    vertex(-5,-38,1);
+    vertex(-13,-43,1);
+    vertex(-10,-34,1);
+    endShape();
+
+    pop();
+}
+
+function drawHorse2() {
+    push();
+    
+    //Mane
+    fill(horses.two.color)
+    beginShape();
+    vertex(-100,0,0);
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-70,-55,0);
+    vertex(-85,-20,0);
+    endShape();
+
+    //Head
+    fill(horses.two.color)
+    beginShape();
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-47,-75,0);
+    vertex(-42,-78,0);
+    vertex(-40,-70,0);
+    vertex(-25,-60,0);
+    vertex(-22,-50,0);
+    vertex(-5,-38,0);
+    vertex(-3,-32,0);
+    vertex(-5,-26,0);
+    vertex(-10,-20,0)
+    vertex(-29,-25,0);
+    vertex(-25,-5,0);
+    vertex(-26,0,0)
+    endShape();
+
+    //Head Details
+    line(-40,-70,1,-43,-60,1)
+    line(-29,-25,0,-40,-30,0)
+
+    //Eye
+    fill(0,0,0);
+    beginShape();
+    vertex(-37,-59,1);
+    vertex(-33,-60,1);
+    vertex(-30,-58,1);
+    vertex(-27,-55,1);
+    vertex(-29,-52,1);
+    vertex(-36,-55,1);
+    endShape();
+
+    fill(25,25,25);
+    beginShape();
+    vertex(-3,-30,1);
+    vertex(-5,-38,1);
+    vertex(-13,-43,1);
+    vertex(-10,-34,1);
+    endShape();
+
+    pop();
+}
+
+function drawHorse3() {
+    push();
+    
+    //Mane
+    fill(horses.three.color)
+    beginShape();
+    vertex(-100,0,0);
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-70,-55,0);
+    vertex(-85,-20,0);
+    endShape();
+
+    //Head
+    fill(horses.three.color)
+    beginShape();
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-47,-75,0);
+    vertex(-42,-78,0);
+    vertex(-40,-70,0);
+    vertex(-25,-60,0);
+    vertex(-22,-50,0);
+    vertex(-5,-38,0);
+    vertex(-3,-32,0);
+    vertex(-5,-26,0);
+    vertex(-10,-20,0)
+    vertex(-29,-25,0);
+    vertex(-25,-5,0);
+    vertex(-26,0,0)
+    endShape();
+
+    //Head Details
+    line(-40,-70,1,-43,-60,1)
+    line(-29,-25,0,-40,-30,0)
+
+    //Eye
+    fill(0,0,0);
+    beginShape();
+    vertex(-37,-59,1);
+    vertex(-33,-60,1);
+    vertex(-30,-58,1);
+    vertex(-27,-55,1);
+    vertex(-29,-52,1);
+    vertex(-36,-55,1);
+    endShape();
+
+    fill(25,25,25);
+    beginShape();
+    vertex(-3,-30,1);
+    vertex(-5,-38,1);
+    vertex(-13,-43,1);
+    vertex(-10,-34,1);
+    endShape();
+
+    pop();
+}
+
+function drawHorse4() {
+    push();
+    
+    //Mane
+    fill(horses.four.color)
+    beginShape();
+    vertex(-100,0,0);
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-70,-55,0);
+    vertex(-85,-20,0);
+    endShape();
+
+    //Head
+    fill(horses.four.color)
+    beginShape();
+    vertex(-72,0,0);
+    vertex(-75,-25,0);
+    vertex(-65,-50,0);
+    vertex(-50,-60,0);
+    vertex(-50,-70,0);
+    vertex(-47,-75,0);
+    vertex(-42,-78,0);
+    vertex(-40,-70,0);
+    vertex(-25,-60,0);
+    vertex(-22,-50,0);
+    vertex(-5,-38,0);
+    vertex(-3,-32,0);
+    vertex(-5,-26,0);
+    vertex(-10,-20,0)
+    vertex(-29,-25,0);
+    vertex(-25,-5,0);
+    vertex(-26,0,0)
+    endShape();
+
+    //Head Details
+    line(-40,-70,1,-43,-60,1)
+    line(-29,-25,0,-40,-30,0)
+
+    //Eye
+    fill(0,0,0);
+    beginShape();
+    vertex(-37,-59,1);
+    vertex(-33,-60,1);
+    vertex(-30,-58,1);
+    vertex(-27,-55,1);
+    vertex(-29,-52,1);
+    vertex(-36,-55,1);
+    endShape();
+
+    fill(25,25,25);
+    beginShape();
+    vertex(-3,-30,1);
+    vertex(-5,-38,1);
+    vertex(-13,-43,1);
+    vertex(-10,-34,1);
+    endShape();
+
+    pop();
 }
 
 let horses = {
     zero: {
         color: [253, 255, 125],
-        currentAnim: "e",
+        currentAnim: "anims.horse.idle",
         name: "Johnathan",
-        place: 0
     },
     one: {
         color: [125, 255, 136],
         currentAnim: "d",
         name: "Winning Ticket",
-        place: 0
     },
     two: {
         color: [140, 245, 255],
         currentAnim: "c",
         name: "Harry Potter",
-        place: 0
     },
     three: {
         color: [198, 140, 255],
         currentAnim: "b",
         name: "Owesn Edgecombarlow",
-        place: 0
     },
     four: {
         color: [255, 143, 233],
         currentAnim: "a",
         name: "Bullshit With Fur",
-        place: 0
     },
 }
 
@@ -429,6 +1105,7 @@ let scenes = {
         camera(0, -200, 700);
         sceneTime += dt;
         drawGround();
+        horsesVis = false
         charInfo.char1.visible = true
         charInfo.char2.visible = true
         charInfo.char1.currentAnim = anims.char1.idle;
@@ -507,17 +1184,52 @@ let scenes = {
         }
     },
     horse1: function (t, dt) {
+        horsesVis = true
+        horses.zero.currentAnim = anims.zero.idle
+        horses.one.currentAnim = anims.one.idle
+        horses.two.currentAnim = anims.two.idle
+        horses.three.currentAnim = anims.three.idle
+        horses.four.currentAnim = anims.four.idle
         camera(0, -0, 700);
-        sceneTime += dt
-        charInfo.char1.visible = false
-        charInfo.char2.visible = false
+        sceneTime += dt;
+        charInfo.char1.visible = false;
+        charInfo.char2.visible = false;
         drawCourse();
+
+        push();
+        translate(-600,-200 + slot * 100,0)
+        drawArrow();
+        pop();
     },
     horse2: function (t, dt) {
         camera(0, -0, 700);
-        sceneTime += dt
+        sceneTime += dt;
         drawCourse();
-        //ill get to this later
+        
+        horses[temp[0]].currentAnim = anims[temp[0]].first
+        horses[temp[1]].currentAnim = anims[temp[1]].second
+        horses[temp[2]].currentAnim = anims[temp[2]].third
+        horses[temp[3]].currentAnim = anims[temp[3]].fourth
+        horses[temp[4]].currentAnim = anims[temp[4]].fifth
+
+        if(sceneTime > 10) {
+            sceneTime = 0
+            currentScene = "horse3"
+            if (chosenHorse == temp[0]) {
+                money += bet * 2;
+            }
+        }
+    },
+    horse3: function (t, dt) {
+        camera(0,-0, 700);
+        sceneTime += dt;
+        drawCourse();
+
+        horses.zero.currentAnim = anims.zero.finish
+        horses.one.currentAnim = anims.one.finish
+        horses.two.currentAnim = anims.two.finish
+        horses.three.currentAnim = anims.three.finish
+        horses.four.currentAnim = anims.four.finish
     }
 }
 
@@ -545,6 +1257,17 @@ function drawCourse() {
     fill("green")
     translate(450, 0, 1)
     plane(100, 500, 100, 100)
+    pop();
+}
+
+function drawArrow() {
+    push();
+    fill(255,0,0)
+    beginShape();
+    vertex(0,0,0);
+    vertex(-25,-25,0);
+    vertex(-25,25,0);
+    endShape();
     pop();
 }
 
@@ -1093,6 +1816,8 @@ function healthBar(char) {
     pop();
 }
 
+let horsesVis;
+
 function updateAnims(t, dt) {
     if (charInfo.char1.visible == true) {
         charInfo.char1.currentAnim(t, dt);
@@ -1102,6 +1827,13 @@ function updateAnims(t, dt) {
     }
     if (charInfo.char3.visible == true) {
         charInfo.char3.currentAnim(t, dt);
+    }
+    if (horsesVis == true){
+        horses.zero.currentAnim(t, dt);
+        horses.one.currentAnim(t, dt);
+        horses.two.currentAnim(t, dt);
+        horses.three.currentAnim(t, dt);
+        horses.four.currentAnim(t, dt);
     }
 }
 
@@ -1166,17 +1898,48 @@ let textScenes = {
         fill(255, 255, 255);
         stroke(255);
         textFont(font);
-        textSize(36);
+        textSize(30);
         translate(0, 0, 5)
-        //box(185, 40, 0)
         translate(-0, 0, 0);
         text("Selected Horse: " + horses[chosenHorse].name, -300, -300)
         text("$" + money, 600, -300)
+        text(bet, -710,75)
         pop();
     },
     horse2: function () {
-
+        push();
+        resetMatrix();
+        fill(255, 255, 255);
+        stroke(255);
+        textFont(font);
+        textSize(30);
+        translate(0, 0, 5)
+        translate(-0, 0, 0);
+        text("Selected Horse: " + horses[chosenHorse].name, -300, -300)
+        text("$" + money, 600, -300)
+        text(bet, -710,75)
+        pop();
     },
+    horse3: function () {
+        push();
+        resetMatrix();
+        fill(255, 255, 255);
+        stroke(255);
+        textFont(font);
+        textSize(30);
+        translate(0, 0, 5)
+        translate(-0, 0, 0);
+        text("Winning Horse: " + horses[temp[0]].name, -300, -300)
+        text("$" + money, 600, -300)
+        text(bet, -710,75)
+        text("Rankings:", 600,-200)
+        text(horses[temp[0]].name,510,-150)
+        text(horses[temp[1]].name,510,-100)
+        text(horses[temp[2]].name,510,-50)
+        text(horses[temp[3]].name,510,0)
+        text(horses[temp[4]].name,510,50)
+        pop();
+    }
 }
 
 //Called every frame
@@ -1198,5 +1961,4 @@ export function draw(t, dt) {
     updateAnims(t, dt);
 
     updateText();
-
 }
